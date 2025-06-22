@@ -25,3 +25,41 @@ console.log(list);
 
 var tuple: [string, number] = ["hello", 10]; // Tupla com dois tipos
 console.log(tuple);
+
+var list: number[] = [1, 2, 3];
+// Percorrer valores da matriz
+for (var i = 0; i < list.length; i++) {
+    console.log(list[i]);
+}
+// Percorrer valores da matriz usando for...in
+var list1: number[] = [1, 2, 3, 4];
+for (var j in list1) {
+    console.log(list1[j]);
+}
+
+var list2: number[] = [1, 2, 3, 4, 5 ];
+for (var w of list2) {
+    console.log(w);
+}
+var list3: Array<number> = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]; // Matriz genérica
+for (var k = 0; k < list3.length; k++) {
+    console.log(list3[k]);
+}
+// Tupla
+var x: [string, number];
+x = ["hello", 10];
+console.log(x[0]); // Acessar o primeiro elemento da tupla e aplicar substring
+console.log(x[0].substring(1)); // Saída: "ello"
+console.log(x[1].toString()); // Acessar o segundo elemento da tupla e converter para string
+console.log(x[1].toFixed(2)); // Acessar o segundo elemento da
+
+enum Color {Red, Green, Blue}; // Enumeração
+var c: Color = Color.Green; // Atribuir um valor da enumeração
+console.log(c); // Saída: 1 (índice do valor Green na enumeração)
+var colorName: string = Color[2]; // Obter o nome do valor da enumeração
+console.log(colorName); // Saída: "Blue" (nome do valor Blue na enumeração)
+
+var u: undefined = undefined; // Indefinido
+console.log(u); // Saída: undefined
+var n: null = null; // Nulo
+console.log(n); // Saída: null
