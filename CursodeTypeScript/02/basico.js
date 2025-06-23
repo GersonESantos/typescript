@@ -1,6 +1,15 @@
+// Exemplo básico de tipos em TypeScript
+var createHelloWorld = function () {
+    return function () {
+        var args = [];
+        for (var _i = 0; _i < arguments.length; _i++) {
+            args[_i] = arguments[_i];
+        }
+        return "Hello World";
+    };
+};
+console.log(createHelloWorld()()); // Saída: "Hello
 console.log("Olá!");
-var dataNacimento = new Date(1957, 3, 7); // Data de nascimento
-console.log(dataNacimento); // Saída: Sat Mar 07 1957 00:00:00 GMT-0300 (Horário Padrão de Brasília)
 var isDone = false; // Booleano true ou false
 console.log(isDone);
 var lines = 42; // Números inteiros ou decimais

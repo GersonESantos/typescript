@@ -1,3 +1,11 @@
+// Exemplo básico de tipos em TypeScript
+
+
+var createHelloWorld = function() {
+    return (...args: any[]) => "Hello World";
+};
+
+
 console.log("Olá!");
 var isDone: boolean = false; // Booleano true ou false
 console.log(isDone);
