@@ -1,10 +1,10 @@
-
 import express, { Request, Response} from 'express';
 import cors from 'cors';
 
 const app = express();
 app.use(express.json());
 app.use(cors());
+
 enum Estados {
     MG = 'Minas Gerais',
     SP = 'São Paulo',
@@ -34,8 +34,8 @@ enum Estados {
     PI = 'Piauí',
     MA = 'Maranhão'
 }
-interface IProdutos
-     {
+
+interface IProdutos {
     id: number;
     nome: string;
     preco: number;
@@ -47,32 +47,30 @@ interface IProdutos
         estado?: Estados;
              }
     }
+
 let produtos: IProdutos[] = []
+
 app.get('/', (req: Request, res: Response) => {
     res.send('API is running');
-
  });
- 
 
-  const newProdutos=({
+ app.get('/produtos', (req: Request, res: Response) => {
+     const newProdutos: IProdutos = {
         id: Math.random(),
         nome: 'Batedeira de Bolo walita', 
         preco: 10,
-        endereco:
-                {
+        endereco: {
                 rua: 'Arceburgo',
                 numero: 20,
                 bairro: 'Bomfim',
                 cidade: 'Belo Horizonte',
                 estado: Estados.MG
                 }
-              }
-              );
-              produtos.push (newProdutos);
+              };
+              produtos.push(newProdutos);
               return res.json(produtos);
         });
 
-app.listen(8080, () => 
-    {
+app.listen(8080, () => {
     console.log('Rodando app listening at http://localhost:8080');
-   } );
+});
