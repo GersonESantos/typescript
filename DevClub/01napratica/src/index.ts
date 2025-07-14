@@ -51,8 +51,8 @@ interface IProdutos {
 let produtos: IProdutos[] = []
 
 app.get('/', (req: Request, res: Response) => {
-    res.send('API is running');
- });
+    return res.json({ message: 'Hello World' });
+});
 
  app.get('/produtos', (req: Request, res: Response) => {
      const newProdutos: IProdutos = {
