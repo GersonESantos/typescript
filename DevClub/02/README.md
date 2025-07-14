@@ -1,6 +1,8 @@
-# Projeto Express com TypeScript
+# Projeto Express com TypeScript - DevClub 02
 
-Este projeto demonstra como configurar um servidor Express básico usando TypeScript.
+Este projeto demonstra como configurar um servidor Express com TypeScript, incluindo interfaces e manipulação de dados.
+
+**Repositório**: https://github.com/GersonESantos/typescript/tree/main/DevClub/02
 
 ## Pré-requisitos
 
@@ -12,7 +14,7 @@ Este projeto demonstra como configurar um servidor Express básico usando TypeSc
 ### 1. Inicializar o projeto
 
 ```bash
-cd C:\Repo2024\typescript\DevClub\01\backend
+cd C:\Repo2024\typescript\DevClub\02\backend
 npm init -y
 ```
 
@@ -77,12 +79,41 @@ import express, { Request, Response } from 'express';
 
 const app = express();
 
+interface IProducts {
+    id: number;
+    name: string;
+    price: number;
+    quantity: number;
+    address: {
+        street: string;
+        number: number;
+        city: string;
+        state: string;
+    }
+}
+
+let produts: IProducts[] = [];
+
 app.get('/', function (req, res) {
     res.send('API is running');
 });
 
 app.get('/produtos', (req: Request, res: Response) => {
-    return res.send('Ja temos: produtos');
+    const newProduct: IProducts = {
+        id: Math.random(),
+        name: 'Produto ',
+        price: 100,
+        quantity: 10,
+        address:{
+            street: 'Rua A',
+            number: 123,
+            city: 'Cidade B',
+            state: 'Estado C' 
+        }
+    }
+
+    produts.push(newProduct);
+    return res.json(produts);
 });
 
 app.listen(3000, () => {
@@ -106,7 +137,7 @@ npm start
 ## Estrutura do projeto
 
 ```
-C:\Repo2024\typescript\DevClub\01\backend\
+C:\Repo2024\typescript\DevClub\02\backend\
 ├── src/
 │   └── index.ts
 ├── dist/ (gerado após build)
@@ -119,12 +150,19 @@ C:\Repo2024\typescript\DevClub\01\backend\
 
 Após executar `npm run dev`, acesse:
 - **Rota principal**: http://localhost:3000 - Retorna "API is running"
-- **Rota produtos**: http://localhost:3000/produtos - Retorna "Ja temos: produtos"
+- **Rota produtos**: http://localhost:3000/produtos - Cria e retorna produtos
 
 ## Rotas disponíveis
 
 - `GET /` - Página inicial da API
-- `GET /produtos` - Exibe mensagem sobre produtos
+- `GET /produtos` - Cria um novo produto e retorna a lista completa
+
+## Funcionalidades
+
+- **Interface TypeScript**: Define a estrutura dos produtos com tipagem forte
+- **Gerenciamento de Estado**: Mantém uma lista de produtos em memória
+- **Criação de Produtos**: Cada chamada para `/produtos` cria um novo produto
+- **Resposta JSON**: Retorna dados estruturados em formato JSON
 
 ## Comandos úteis
 
@@ -132,3 +170,9 @@ Após executar `npm run dev`, acesse:
 - `npm run build` - Compila o TypeScript para JavaScript
 - `npm start` - Executa a versão compilada
 - `npm run clean` - Limpa arquivos compilados (se configurado)
+
+## Observações
+
+- A rota `/produtos` está usando GET para criar produtos (não é uma prática REST ideal)
+- Os dados são armazenados em memória e serão perdidos quando o servidor for reiniciado
+- Para produção, considere usar um banco de dados e seguir padrões REST
