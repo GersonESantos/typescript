@@ -1,4 +1,4 @@
-import express, { Request, Response} from 'express';
+import express, { Request, Response } from 'express';
 import cors from 'cors';
 
 const app = express();
@@ -48,7 +48,7 @@ interface IProdutos {
     }
 }
 
-let produtos: IProdutos[] = []
+let produtos: IProdutos[] = [];
 
 app.get('/', (req: Request, res: Response) => {
     res.send('API is running');
