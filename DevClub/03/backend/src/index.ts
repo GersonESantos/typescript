@@ -1,18 +1,53 @@
 import express, { Request, Response } from 'express';
 
 const app = express();
+
+enum States{
+    AC = 'Acre',
+    AL = 'Alagoas',
+    AP = 'Amapá',
+    AM = 'Amazonas',
+    BA = 'Bahia',
+    CE = 'Ceará',
+    DF = 'Distrito Federal',
+    ES = 'Espírito Santo',
+    GO = 'Goiás',       
+    MA = 'Maranhão',
+    MT = 'Mato Grosso',
+    MS = 'Mato Grosso do Sul',
+    MG = 'Minas Gerais',
+    PA = 'Pará',
+    PB = 'Paraíba',         
+    PR = 'Paraná',
+    PE = 'Pernambuco',
+    PI = 'Piauí',
+    RJ = 'Rio de Janeiro',
+    RN = 'Rio Grande do Norte',
+    RS = 'Rio Grande do Sul',
+    RO = 'Rondônia',
+    RR = 'Roraima',
+    SC = 'Santa Catarina',
+    SP = 'São Paulo',
+    SE = 'Sergipe',
+    TO = 'Tocantins'
+    }
+
 interface IProducts {
     id: number;
     name: string;
     price: number;
     quantity: number;
-    address: {
-        street: string;
-        number: number;
-        city: string;
-        state: string;
-    }
+    address: IAddress;
+
 }
+
+interface IAddress {
+    street: string;
+    number: number;
+    city: string;
+    state: string;
+    }
+
 let produts: IProducts[] = [];
 
 
@@ -26,11 +61,11 @@ app.get('/produtos', (req: Request, res: Response) => {
         name: 'Produto ',
         price: 100,
         quantity: 10,
-        address:{
+        address: {
             street: 'Rua A',
             number: 123,
             city: 'Cidade B',
-            state: 'Estado C' 
+            state: States.AC
         }
     }
 
