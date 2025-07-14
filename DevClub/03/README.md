@@ -1,8 +1,8 @@
-# Projeto Express com TypeScript - DevClub 02
+# Projeto Express com TypeScript - DevClub 03
 
-Este projeto demonstra como configurar um servidor Express com TypeScript, incluindo interfaces e manipulação de dados.
+Este projeto demonstra como configurar um servidor Express com TypeScript, incluindo interfaces, enums e manipulação de dados com tipagem forte.
 
-**Repositório**: https://github.com/GersonESantos/typescript/tree/main/DevClub/02
+**Repositório**: https://github.com/GersonESantos/typescript/tree/main/DevClub/03
 
 ## Pré-requisitos
 
@@ -14,7 +14,7 @@ Este projeto demonstra como configurar um servidor Express com TypeScript, inclu
 ### 1. Inicializar o projeto
 
 ```bash
-cd C:\Repo2024\typescript\DevClub\02\backend
+cd C:\Repo2024\typescript\DevClub\03\backend
 npm init -y
 ```
 
@@ -79,17 +79,49 @@ import express, { Request, Response } from 'express';
 
 const app = express();
 
+enum States{
+    AC = 'Acre',
+    AL = 'Alagoas',
+    AP = 'Amapá',
+    AM = 'Amazonas',
+    BA = 'Bahia',
+    CE = 'Ceará',
+    DF = 'Distrito Federal',
+    ES = 'Espírito Santo',
+    GO = 'Goiás',       
+    MA = 'Maranhão',
+    MT = 'Mato Grosso',
+    MS = 'Mato Grosso do Sul',
+    MG = 'Minas Gerais',
+    PA = 'Pará',
+    PB = 'Paraíba',         
+    PR = 'Paraná',
+    PE = 'Pernambuco',
+    PI = 'Piauí',
+    RJ = 'Rio de Janeiro',
+    RN = 'Rio Grande do Norte',
+    RS = 'Rio Grande do Sul',
+    RO = 'Rondônia',
+    RR = 'Roraima',
+    SC = 'Santa Catarina',
+    SP = 'São Paulo',
+    SE = 'Sergipe',
+    TO = 'Tocantins'
+}
+
 interface IProducts {
     id: number;
     name: string;
     price: number;
     quantity: number;
-    address: {
-        street: string;
-        number: number;
-        city: string;
-        state: string;
-    }
+    address: IAddress;
+}
+
+interface IAddress {
+    street: string;
+    number: number;
+    city: string;
+    state: string;
 }
 
 let produts: IProducts[] = [];
@@ -104,11 +136,11 @@ app.get('/produtos', (req: Request, res: Response) => {
         name: 'Produto ',
         price: 100,
         quantity: 10,
-        address:{
+        address: {
             street: 'Rua A',
             number: 123,
             city: 'Cidade B',
-            state: 'Estado C' 
+            state: States.AC
         }
     }
 
@@ -137,7 +169,7 @@ npm start
 ## Estrutura do projeto
 
 ```
-C:\Repo2024\typescript\DevClub\02\backend\
+C:\Repo2024\typescript\DevClub\03\backend\
 ├── src/
 │   └── index.ts
 ├── dist/ (gerado após build)
@@ -159,10 +191,18 @@ Após executar `npm run dev`, acesse:
 
 ## Funcionalidades
 
-- **Interface TypeScript**: Define a estrutura dos produtos com tipagem forte
+- **Enum States**: Define todos os estados brasileiros com tipagem forte
+- **Interface IProducts**: Define a estrutura dos produtos
+- **Interface IAddress**: Define a estrutura do endereço (separada para reutilização)
 - **Gerenciamento de Estado**: Mantém uma lista de produtos em memória
 - **Criação de Produtos**: Cada chamada para `/produtos` cria um novo produto
 - **Resposta JSON**: Retorna dados estruturados em formato JSON
+
+## Principais diferenças do DevClub 02
+
+- **Enum States**: Adicionado enum com todos os estados brasileiros
+- **Interface IAddress**: Endereço separado em interface própria para melhor organização
+- **Tipagem mais forte**: Uso do enum `States.AC` ao invés de string livre
 
 ## Comandos úteis
 
@@ -175,4 +215,5 @@ Após executar `npm run dev`, acesse:
 
 - A rota `/produtos` está usando GET para criar produtos (não é uma prática REST ideal)
 - Os dados são armazenados em memória e serão perdidos quando o servidor for reiniciado
-- Para produção, considere usar um banco de dados e seguir padrões REST
+- Para produção, considere usar um banco de dados e seguir padrões REST adequados
+- O enum `States` garante que apenas estados válidos sejam utilizados
