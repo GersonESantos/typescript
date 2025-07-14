@@ -95,6 +95,7 @@ npm run dev
 
 ### Build para produção
 ```bash
+cd C:\Repo2024\typescript\DevClub\00\backend
 npm run build
 npm start
 ```
