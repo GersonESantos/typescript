@@ -1,3 +1,4 @@
+
 import express, { Request, Response} from 'express';
 import cors from 'cors';
 
@@ -47,8 +48,11 @@ interface IProdutos
              }
     }
 let produtos: IProdutos[] = []
+app.get('/', (req: Request, res: Response) => {
+    res.send('API is running');
 
-app.get('/produtos', (req: Request, res: Response) => {
+ });
+ 
 
   const newProdutos=({
         id: Math.random(),
