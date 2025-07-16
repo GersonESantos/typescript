@@ -1,7 +1,6 @@
-# Projeto Express com TypeScript - DevClub 03
+# Projeto Express com TypeScript + React - DevClub 04
 
-Este projeto demonstra como configurar um servidor Express com TypeScript, incluindo interfaces, enums e manipulação de dados com tipagem forte.
-
+Este projeto demonstra como criar um servidor Express com TypeScript (backend) e um frontend React que consome a API, incluindo interfaces, enums e comunicação entre frontend e backend.
 
 #### CURSO DE TYPESCRIPT NA PRÁTICA [YOUTUBE ](https://www.youtube.com/watch?v=w2BA05gabP0)
 
@@ -12,31 +11,47 @@ Este projeto demonstra como configurar um servidor Express com TypeScript, inclu
 
 **Repositório**: https://github.com/GersonESantos/typescript/tree/main/DevClub/03
 
-## Pré-requisitos
 
-- Node.js instalado
-- npm ou yarn
+**Repositório**: https://github.com/GersonESantos/typescript/tree/main/DevClub/04
 
-## Configuração do Projeto
+## Estrutura do Projeto
 
-### 1. Inicializar o projeto
+```
+C:\Repo2024\typescript\DevClub\04\
+├── backend/
+│   ├── src/
+│   │   └── index.ts
+│   ├── package.json
+│   └── tsconfig.json
+└── frontend/
+    ├── src/
+    │   ├── services/
+    │   │   └── api.ts
+    │   ├── App.tsx
+    │   └── main.tsx
+    └── package.json
+```
+
+## Configuração do Backend
+
+### 1. Inicializar o projeto backend
 
 ```bash
-cd C:\Repo2024\typescript\DevClub\03\backend
+cd C:\Repo2024\typescript\DevClub\04\backend
 npm init -y
 ```
 
-### 2. Instalar dependências
+### 2. Instalar dependências do backend
 
 ```bash
 # Dependências de produção
-npm install express
+npm install express cors
 
 # Dependências de desenvolvimento
-npm install --save-dev @types/express @types/node typescript ts-node
+npm install --save-dev @types/express @types/cors @types/node typescript ts-node
 ```
 
-### 3. Configurar TypeScript
+### 3. Configurar TypeScript no backend
 
 Crie o arquivo `tsconfig.json`:
 
@@ -58,9 +73,7 @@ Crie o arquivo `tsconfig.json`:
 }
 ```
 
-### 4. Configurar scripts no package.json
-
-Adicione os scripts no `package.json`:
+### 4. Configurar scripts no package.json do backend
 
 ```json
 {
@@ -72,20 +85,15 @@ Adicione os scripts no `package.json`:
 }
 ```
 
-### 5. Criar estrutura de pastas
-
-```bash
-mkdir src
-```
-
-### 6. Criar o arquivo principal
-
-Crie o arquivo `src/index.ts` com o seguinte conteúdo:
+### 5. Criar o arquivo backend/src/index.ts
 
 ```typescript
 import express, { Request, Response } from 'express';
+import cors from 'cors';
 
 const app = express();
+app.use(cors());
+app.use(express.json());
 
 enum States{
     AC = 'Acre',
@@ -161,67 +169,192 @@ app.listen(3000, () => {
 });
 ```
 
+## Configuração do Frontend
+
+### 1. Criar projeto React com TypeScript
+
+```bash
+cd C:\Repo2024\typescript\DevClub\04
+npm create vite@latest frontend -- --template react-ts
+cd frontend
+npm install
+```
+
+### 2. Instalar Axios para requisições HTTP
+
+```bash
+npm install axios
+```
+
+### 3. Criar arquivo de serviços da API
+
+Crie o arquivo `src/services/api.ts`:
+
+```typescript
+import axios from 'axios';
+
+const api = axios.create({
+  baseURL: 'http://localhost:3000'
+});
+
+export default api;
+```
+
+### 4. Configurar App.tsx
+
+```typescript
+import { useEffect, useState } from 'react'
+import api from './services/api'
+import './App.css'
+
+enum States{
+  AC = 'Acre',
+  AL = 'Alagoas',
+  AP = 'Amapá',
+  AM = 'Amazonas',
+  BA = 'Bahia',
+  CE = 'Ceará',
+  DF = 'Distrito Federal',
+  ES = 'Espírito Santo',
+  GO = 'Goiás',       
+  MA = 'Maranhão',
+  MT = 'Mato Grosso',
+  MS = 'Mato Grosso do Sul',
+  MG = 'Minas Gerais',
+  PA = 'Pará',
+  PB = 'Paraíba',         
+  PR = 'Paraná',
+  PE = 'Pernambuco',
+  PI = 'Piauí',
+  RJ = 'Rio de Janeiro',
+  RN = 'Rio Grande do Norte',
+  RS = 'Rio Grande do Sul',
+  RO = 'Rondônia',
+  RR = 'Roraima',
+  SC = 'Santa Catarina',
+  SP = 'São Paulo',
+  SE = 'Sergipe',
+  TO = 'Tocantins'
+}
+
+interface IAddress {
+  street: string;
+  number: number;
+  city: string;
+  state: string;
+}
+
+interface IProducts {
+  id: number;
+  name: string;
+  price: number;
+  quantity: number;
+  address: IAddress;
+}
+
+function App() {
+  const [products, setProducts] = useState<IProducts[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+
+  useEffect(() => {
+    async function getProducts() {
+      try {
+        setLoading(true);
+        setError(null);
+        const response = await api.get<IProducts[]>('/produtos');
+        setProducts(response.data);
+      } catch (error) {
+        console.error('Error fetching products:', error);
+        setError('Erro ao carregar produtos. Verifique se o backend está rodando.');
+      } finally {
+        setLoading(false);
+      }
+    }
+    
+    getProducts();
+  }, []);
+
+  if (loading) {
+    return <div>Carregando...</div>;
+  }
+
+  if (error) {
+    return <div style={{color: 'red'}}>{error}</div>;
+  }
+
+  if (products.length === 0) {
+    return <div>Nenhum produto encontrado</div>;
+  }
+
+  return (
+    <div>
+      <h1>Produtos</h1>
+      {products.map((product) => (
+        <div key={product.id}>
+          <h2>{product.name}</h2>
+          <p>Price: {product.price}</p>
+          <p>Quantity: {product.quantity}</p>
+          <p>Address: {product.address.street}, {product.address.number} - {product.address.city}, {product.address.state}</p>
+        </div>
+      ))}
+    </div>
+  )
+}
+
+export default App
+```
+
 ## Como executar
 
-### Modo desenvolvimento (com hot reload)
+### 1. Executar o Backend
+
 ```bash
+cd C:\Repo2024\typescript\DevClub\04\backend
 npm run dev
 ```
 
-### Build para produção
+### 2. Executar o Frontend
+
 ```bash
-npm run build
-npm start
-```
-
-## Estrutura do projeto
-
-```
-C:\Repo2024\typescript\DevClub\03\backend\
-├── src/
-│   └── index.ts
-├── dist/ (gerado após build)
-├── package.json
-├── tsconfig.json
-└── README.md
+cd C:\Repo2024\typescript\DevClub\04\frontend
+npm run dev
 ```
 
 ## Testando a aplicação
 
-Após executar `npm run dev`, acesse:
-- **Rota principal**: http://localhost:3000 - Retorna "API is running"
-- **Rota produtos**: http://localhost:3000/produtos - Cria e retorna produtos
-
-## Rotas disponíveis
-
-- `GET /` - Página inicial da API
-- `GET /produtos` - Cria um novo produto e retorna a lista completa
+1. **Backend**: http://localhost:3000/produtos - Retorna JSON com produtos
+2. **Frontend**: http://localhost:5173 - Interface React consumindo a API
 
 ## Funcionalidades
 
-- **Enum States**: Define todos os estados brasileiros com tipagem forte
-- **Interface IProducts**: Define a estrutura dos produtos
-- **Interface IAddress**: Define a estrutura do endereço (separada para reutilização)
-- **Gerenciamento de Estado**: Mantém uma lista de produtos em memória
-- **Criação de Produtos**: Cada chamada para `/produtos` cria um novo produto
-- **Resposta JSON**: Retorna dados estruturados em formato JSON
+### Backend
+- **CORS habilitado**: Permite requisições do frontend
+- **Enum States**: Define todos os estados brasileiros
+- **Interfaces TypeScript**: Tipagem forte para produtos e endereços
+- **API REST**: Endpoint para criação e listagem de produtos
 
-## Principais diferenças do DevClub 02
-
-- **Enum States**: Adicionado enum com todos os estados brasileiros
-- **Interface IAddress**: Endereço separado em interface própria para melhor organização
-- **Tipagem mais forte**: Uso do enum `States.AC` ao invés de string livre
+### Frontend
+- **React com TypeScript**: Interface tipada
+- **Axios**: Cliente HTTP para consumir a API
+- **Estados gerenciados**: Loading, error e products
+- **Componentização**: Estrutura organizada e reutilizável
 
 ## Comandos úteis
 
+### Backend
 - `npm run dev` - Executa em modo desenvolvimento
-- `npm run build` - Compila o TypeScript para JavaScript
+- `npm run build` - Compila o TypeScript
 - `npm start` - Executa a versão compilada
-- `npm run clean` - Limpa arquivos compilados (se configurado)
+
+### Frontend
+- `npm run dev` - Executa em modo desenvolvimento
+- `npm run build` - Build para produção
+- `npm run preview` - Preview da versão de produção
 
 ## Observações
 
-- A rota `/produtos` está usando GET para criar produtos (não é uma prática REST ideal)
-- Os dados são armazenados em memória e serão perdidos quando o servidor for reiniciado
-- Para produção, considere usar um banco de dados e seguir padrões REST adequados
-- O enum `States` garante que apenas estados válidos sejam utilizados
+- O backend deve estar rodando antes do frontend
+- A rota `/produtos` cria um novo produto a cada requisição (não é REST ideal)
+- Para produção, considere usar um banco de dados e autenticação
+- O CORS está habilitado para desenvolvimento local
