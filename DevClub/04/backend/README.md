@@ -2,6 +2,14 @@
 
 Este projeto demonstra como configurar um servidor Express com TypeScript, incluindo interfaces, enums e manipulação de dados com tipagem forte.
 
+
+#### CURSO DE TYPESCRIPT NA PRÁTICA [YOUTUBE ](https://www.youtube.com/watch?v=w2BA05gabP0)
+
+#### MEU TYPESCRIPT [Git ](https://github.com/GersonESantos/typescript/tree/main/DevClub/00)
+
+
+#### typescriptlang.org [Link ](https://www.typescriptlang.org/)
+
 **Repositório**: https://github.com/GersonESantos/typescript/tree/main/DevClub/03
 
 ## Pré-requisitos
