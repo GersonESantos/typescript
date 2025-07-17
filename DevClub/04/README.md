@@ -9,7 +9,6 @@ Este projeto demonstra como criar um servidor Express com TypeScript (backend) e
 
 #### typescriptlang.org [Link ](https://www.typescriptlang.org/)
 
-**Repositório**: https://github.com/GersonESantos/typescript/tree/main/DevClub/03
 
 
 **Repositório**: https://github.com/GersonESantos/typescript/tree/main/DevClub/04
