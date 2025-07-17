@@ -4,6 +4,23 @@ import './App.css'
 
 // ...existing enums and interfaces...
 
+
+interface IAddress {
+  street: string;
+  number: number;
+  city: string;
+  state: string;
+}
+
+interface IProducts {
+  id: number;
+  name: string;
+  price: number;
+  quantity: number;
+  address: IAddress;
+}
+
+
 function App() {
   const [products, setProducts] = useState<IProducts[]>([]);
   const [loading, setLoading] = useState(true);
