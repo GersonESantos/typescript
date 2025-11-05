@@ -12,11 +12,11 @@ const buscarUsuario = (id: number,
    
 
 buscarUsuario(1, (erro, usuario) => {
-    erro ? console.error('❌❌Erro: erro') : 
+    erro ? console.error('❌Erro: erro') : 
     console.log(`Usuário encontrado: ${usuario}`, usuario);
 }); 
 
 buscarUsuario(0, (erro, usuario) => {
-    erro ? console.error('Erro: erro') : 
+    erro ? console.error('❌Erro: erro') : 
     console.log(`Usuário encontrado: ${usuario}`, usuario);
 });
