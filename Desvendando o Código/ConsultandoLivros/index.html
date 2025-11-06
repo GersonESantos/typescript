@@ -1,12 +1,35 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-<body>
-    
-</body>
-<script src="script.js"></script>
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Consultar Livros - ISBN</title>
+    <style>
+      body { font-family: Arial, sans-serif; padding: 1rem; max-width: 900px; margin: auto; }
+      header { margin-bottom: 1rem; }
+      label { display:block; margin-bottom: .5rem; font-weight:600; }
+      input[type="text"] { width: 60%; padding: .5rem; margin-right:.5rem; }
+      button { padding: .5rem 1rem; }
+      .livro { border:1px solid #ddd; padding:.75rem; margin:.75rem 0; border-radius:6px; }
+      .livro h2 { margin:0 0 .5rem 0; font-size:1.1rem; }
+      .meta { color:#555; font-size:.9rem; margin: .25rem 0; }
+      .error { color: #b00020; font-weight:600; }
+    </style>
+  </head>
+  <body>
+    <header>
+      <h1>Pesquisar livro por ISBN</h1>
+      <p>Informe um ISBN (ex.: 9780143126560) e clique em "Buscar".</p>
+      <label for="isbnInput">ISBN</label>
+      <input id="isbnInput" type="text" placeholder="Digite o ISBN ou use um exemplo" />
+      <button id="buscarBtn">Buscar</button>
+    </header>
+
+    <main>
+      <div id="mensagem"></div>
+      <div id="livros"></div>
+    </main>
+
+    <script src="./script.js"></script>
+  </body>
 </html>
